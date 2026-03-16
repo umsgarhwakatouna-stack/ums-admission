@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>उत्क्रमित मध्य विद्यालय गढ़वा – Admission Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;800&family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a3a6b;
+    --primary-dark: #0f2347;
+    --accent: #f97316;
+    --accent-light: #fff7ed;
+    --green: #15803d;
+    --green-light: #dcfce7;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --bg: #f1f5f9;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    color: var(--text);
+  }
+
+  /* ── SCHOOL HEADER ── */
+  .school-header {
+    background: linear-gradient(160deg, #0a1628 0%, #0f2347 40%, #1a3a6b 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .school-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(201,147,58,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Animated shimmer lines */
+  .school-header::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+    animation: shimmer 6s infinite;
+    pointer-events: none;
+  }
+
+  @keyframes shimmer { to { left: 140%; } }
+
+  .tricolor-top {
+    height: 5px;
+    background: linear-gradient(90deg, #FF6B00 33.3%, #ffffff 33.3% 66.6%, #138808 66.6%);
+  }
+
+  .header-inner {
+    padding: 20px 20px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-top-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Logo circle */
+  .school-logo {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c9933a, #f0c060, #c9933a);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px rgba(201,147,58,0.3), 0 4px 20px rgba(0,0,0,0.4);
+    font-size: 32px;
+    position: relative;
+  }
+
+  .school-logo::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.25);
+  }
+
+  .school-name-block { flex: 1; min-width: 0; }
+
+  .school-name-hi {
+    font-family: 'Noto Sans Devanagari', serif;
+    font-size: 19px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: 0.3px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+
+  .school-name-en {
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #c9933a;
+    letter-spacing: 0.5px;
+    margin-top: 3px;
+    text-transform: uppercase;
+  }
+
+  .school-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin-top: 6px;
+  }
+
+  .meta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    backdrop-filter: blur(4px);
+  }
+
+  .meta-badge .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #c9933a;
+    flex-shrink: 0;
+  }
+
+  /* Gold divider */
+  .gold-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,147,58,0.6), rgba(201,147,58,0.9), rgba(201,147,58,0.6), transparent);
+    margin: 0 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Form title banner */
+  .form-title-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 11px 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .form-title-banner::before,
+  .form-title-banner::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,147,58,0.4));
+  }
+
+  .form-title-banner::after {
+    background: linear-gradient(90deg, rgba(201,147,58,0.4), transparent);
+  }
+
+  .banner-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #f0d9aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Sticky mini bar (shown on scroll) */
+  .sticky-mini {
+    background: rgba(10,22,40,0.97);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    border-bottom: 2px solid rgba(201,147,58,0.5);
+  }
+
+  .sticky-mini .mini-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+
+  .sticky-mini .mini-sub {
+    font-size: 10px;
+    color: #c9933a;
+    font-weight: 500;
+  }
+
+  .sticky-mini .mini-logo {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c9933a, #f0c060);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+
+  /* ── TOP BAR (old - replaced) ── */
+  .top-bar { display: none; }
+  .tricolor-bar { display: none; }
+  .emblem { display: none; }
+  .top-bar-text { display: none; }
+
+  /* ── MAIN CONTAINER ── */
+  .container { max-width: 620px; margin: 0 auto; padding: 16px; }
+
+  /* ── STEP INDICATOR ── */
+  .steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .step-dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+  }
+
+  .step.active .step-dot { background: var(--primary); color: white; }
+  .step.done .step-dot { background: var(--green); color: white; }
+
+  .step-label {
+    font-size: 9px;
+    color: var(--muted);
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .step.active .step-label { color: var(--primary); font-weight: 700; }
+  .step.done .step-label { color: var(--green); }
+
+  .step-line {
+    height: 2px;
+    flex: 0.5;
+    background: var(--border);
+    margin-bottom: 16px;
+    transition: background 0.3s;
+  }
+
+  .step-line.done { background: var(--green); }
+
+  /* ── CARD ── */
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  .card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 14px;
+    border-bottom: 1.5px solid var(--border);
+    margin-bottom: 16px;
+  }
+
+  .card-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .card-title-text h3 { font-size: 14px; font-weight: 700; color: var(--primary); }
+  .card-title-text p { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  /* ── FIELDS ── */
+  .field { margin-bottom: 14px; }
+
+  .field label {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .field label .en { font-size: 12px; font-weight: 600; color: var(--text); }
+  .field label .hi { font-family: 'Noto Sans Devanagari', sans-serif; font-size: 11px; color: var(--muted); }
+  .field label .req { color: var(--red); font-size: 12px; }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: #fafbfc;
+    outline: none;
+    transition: all 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(26,58,107,0.08);
+  }
+
+  .field input.error { border-color: var(--red); background: var(--red-light); }
+  .field input.valid { border-color: var(--green); }
+
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  .field textarea { resize: vertical; min-height: 80px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+  .field-hint { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .field-error { font-size: 11px; color: var(--red); margin-top: 4px; display: none; }
+  .field-error.show { display: block; }
+
+  /* ── MOBILE CHECK ── */
+  .mobile-check-wrap { position: relative; }
+  .mobile-status {
+    position: absolute;
+    right: 12px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    display: none;
+  }
+
+  /* ── UPLOAD BOX ── */
+  .upload-box {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fafbfc;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .upload-box:hover { border-color: var(--primary); background: #f0f4ff; }
+  .upload-box input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .upload-box .up-icon { font-size: 24px; margin-bottom: 4px; }
+  .upload-box .up-title { font-size: 12px; font-weight: 600; color: var(--primary); }
+  .upload-box .up-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .upload-box.uploaded { border-color: var(--green); border-style: solid; background: var(--green-light); }
+  .upload-box.uploaded .up-icon::after { content: ' ✅'; }
+
+  /* Photo box */
+  .photo-upload-wrap {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .photo-box {
+    width: 90px; height: 105px;
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #fafbfc;
+    transition: all 0.2s;
+  }
+
+  .photo-box:hover { border-color: var(--primary); }
+  .photo-box input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .photo-box span { font-size: 10px; color: var(--muted); font-weight: 500; margin-top: 4px; }
+  #photo-img { width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; inset: 0; }
+
+  .photo-rules { flex: 1; }
+  .photo-rules p { font-size: 11px; color: var(--muted); line-height: 1.8; }
+  .photo-rules strong { color: var(--text); }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--primary), #2952a3);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.3px;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+  }
+
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,58,107,0.3); }
+  .btn-primary:active { transform: none; }
+  .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .btn-secondary {
+    width: 100%;
+    padding: 13px;
+    background: white;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover { background: #f0f4ff; }
+
+  /* ── SPINNER ── */
+  .spinner {
+    display: inline-block;
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── DUPLICATE SCREEN ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .alert-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px 20px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  .alert-icon { font-size: 52px; margin-bottom: 12px; }
+  .alert-card h2 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .alert-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  /* ── SUCCESS SCREEN ── */
+  .reg-card {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    border-radius: 16px;
+    padding: 24px 20px;
+    color: white;
+    text-align: center;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reg-card::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .reg-card .label { font-size: 11px; opacity: 0.75; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+  .reg-number {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #fbbf24, #f97316);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+  }
+
+  .reg-card .name { font-size: 14px; opacity: 0.9; }
+  .reg-card .date { font-size: 11px; opacity: 0.6; margin-top: 4px; }
+
+  .success-details {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    margin-bottom: 14px;
+  }
+
+  .success-details h3 { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+
+  .detail-row:last-child { border-bottom: none; }
+  .detail-row .dl { color: var(--muted); }
+  .detail-row .dv { font-weight: 600; color: var(--text); text-align: right; }
+
+  .save-note {
+    background: #fffbeb;
+    border: 1.5px solid #fcd34d;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 12px;
+    color: #92400e;
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 400px) {
+    .two-col { grid-template-columns: 1fr; }
+    .three-col { grid-template-columns: 1fr 1fr; }
+    .container { padding: 10px; }
+    .reg-number { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PREMIUM SCHOOL HEADER -->
+<div class="school-header">
+  <div class="tricolor-top"></div>
+  <div class="header-inner">
+    <div class="header-top-row">
+      <div class="school-logo">🏫</div>
+      <div class="school-name-block">
+        <div class="school-name-hi">उत्क्रमित मध्य विद्यालय<br>गढ़वा, कटौना</div>
+        <div class="school-name-en">U.M.S Garhwa Katouna</div>
+        <div class="school-meta">
+          <span class="meta-badge"><span class="dot"></span>Estd. 1972</span>
+          <span class="meta-badge"><span class="dot"></span>UDISE: 10370902001</span>
+          <span class="meta-badge"><span class="dot"></span>Bihar Govt. School</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="gold-divider"></div>
+  <div class="form-title-banner">
+    <span class="banner-text">✦ प्रवेश पंजीकरण फॉर्म — Admission Registration Form ✦</span>
+  </div>
+</div>
+
+<!-- STICKY MINI BAR -->
+<div class="sticky-mini" id="sticky-mini">
+  <div>
+    <div class="mini-name">उत्क्रमित मध्य विद्यालय गढ़वा</div>
+    <div class="mini-sub">Admission Registration Form</div>
+  </div>
+  <div class="mini-logo">🏫</div>
+</div>
+
+<!-- OLD TOP BAR (hidden) -->
+<div class="top-bar">
+  <div class="tricolor-bar"></div>
+  <div class="top-bar-inner">
+    <div class="emblem">🏫</div>
+    <div class="top-bar-text">
+      <h1>उत्क्रमित मध्य विद्यालय गढ़वा, कटौना</h1>
+      <p>U.M.S Garhwa Katouna &nbsp;|&nbsp; Estd. 1972 &nbsp;|&nbsp; UDISE: 10370902001</p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- STEP INDICATOR -->
+  <div class="steps" id="steps-bar">
+    <div class="step active" id="step1-ind">
+      <div class="step-dot">1</div>
+      <div class="step-label">Personal<br>Info</div>
+    </div>
+    <div class="step-line" id="line1"></div>
+    <div class="step" id="step2-ind">
+      <div class="step-dot">2</div>
+      <div class="step-label">Address &<br>Academic</div>
+    </div>
+    <div class="step-line" id="line2"></div>
+    <div class="step" id="step3-ind">
+      <div class="step-dot">3</div>
+      <div class="step-label">Documents<br>& Submit</div>
+    </div>
+    <div class="step-line" id="line3"></div>
+    <div class="step" id="step4-ind">
+      <div class="step-dot">✓</div>
+      <div class="step-label">Registration<br>Complete</div>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN 1: PERSONAL INFO ═══ -->
+  <div id="screen-1" class="screen active">
+
+    <!-- Photo -->
+    <div class="card">
+      <div class="card-title">
+        <div class="card-icon">📷</div>
+        <div class="card-title-text">
+          <h3>Passport Photo / पासपोर्ट फोटो</h3>
+          <p>Recent photo upload karein</p>
+        </div>
+      </div>
+      <div class="photo-upload-wrap">
+        <label class="photo-box" for="photo-input">
+          <span>📷</span>
+          <span>Photo</span>
+          <img id="photo-img" alt="Photo">
+          <input type="file" id="photo-input" accept="image/*" onchange="previewPhoto(this)">
+        </label>
+        <div class="photo-rules">
+          <p>
+            <strong>Rules / नियम:</strong><br>
+            ✅ White background<br>
+            ✅ Face clearly visible<br>
+            ✅ JPG/PNG format<br>
+            ✅ Max size: 2MB
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personal Details -->
+    <div class="card">
+      <div class="card-title">
+        <div class="card-icon">👤</div>
+        <div class="card-title-text">
+          <h3>Personal Information / व्यक्तिगत जानकारी</h3>
+          <p>* marked fields are required</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">Full Name</span><span class="hi">पूरा नाम</span><span class="req">*</span></label>
+        <input type="text" id="f-name" placeholder="Apna poora naam likhein" oninput="this.value=this.value.toUpperCase()">
+        <div class="field-error" id="err-name">Naam zaroori hai</div>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label><span class="en">Date of Birth</span><span class="hi">जन्म तिथि</span><span class="req">*</span></label>
+          <input type="date" id="f-dob" max="2012-12-31" min="2006-01-01">
+          <div class="field-error" id="err-dob">DOB zaroori hai</div>
+        </div>
+        <div class="field">
+          <label><span class="en">Gender</span><span class="hi">लिंग</span><span class="req">*</span></label>
+          <select id="f-gender">
+            <option value="">-- Select --</option>
+            <option value="Male">Male / पुरुष</option>
+            <option value="Female">Female / महिला</option>
+            <option value="Other">Other / अन्य</option>
+          </select>
+          <div class="field-error" id="err-gender">Gender select karein</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label><span class="en">Father's Name</span><span class="hi">पिता का नाम</span><span class="req">*</span></label>
+          <input type="text" id="f-father" placeholder="" oninput="this.value=this.value.toUpperCase()">
+          <div class="field-error" id="err-father">Pita ka naam zaroori hai</div>
+        </div>
+        <div class="field">
+          <label><span class="en">Mother's Name</span><span class="hi">माता का नाम</span><span class="req">*</span></label>
+          <input type="text" id="f-mother" placeholder="" oninput="this.value=this.value.toUpperCase()">
+          <div class="field-error" id="err-mother">Mata ka naam zaroori hai</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">Mobile Number</span><span class="hi">मोबाइल नंबर</span><span class="req">*</span></label>
+        <input type="tel" id="f-mobile" placeholder="10 digit mobile number" maxlength="10" pattern="[0-9]{10}">
+        <div class="field-hint">Parent/Guardian ka mobile number</div>
+        <div class="field-error" id="err-mobile">Valid 10-digit mobile number daalo</div>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label><span class="en">Religion</span><span class="hi">धर्म</span></label>
+          <select id="f-religion">
+            <option value="">-- Select --</option>
+            <option>Hindu</option><option>Muslim</option><option>Christian</option>
+            <option>Sikh</option><option>Buddhist</option><option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label><span class="en">Caste Category</span><span class="hi">जाति वर्ग</span><span class="req">*</span></label>
+          <select id="f-category">
+            <option value="">-- Select --</option>
+            <option>General</option><option>OBC</option><option>EBC</option><option>BC</option><option>SC</option><option>ST</option><option>EWS</option>
+          </select>
+          <div class="field-error" id="err-category">Category select karein</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">Applicant Aadhar Number</span><span class="hi">आवेदक आधार नंबर</span><span class="req">*</span></label>
+        <div class="mobile-check-wrap">
+          <input type="text" id="f-aadhar" placeholder="12 digit Aadhar number" maxlength="14" oninput="formatAadhar(this); checkAadhar(this)">
+          <span class="mobile-status" id="aadhar-status"></span>
+        </div>
+        <div class="field-error" id="err-aadhar-num">Valid 12-digit Aadhar number daalo</div>
+        <div class="field-error" id="err-aadhar-dup">⚠️ Is Aadhar number se pehle se registration ho chuki hai!</div>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label><span class="en">Father's Aadhar No.</span><span class="hi">पिता का आधार नंबर</span><span class="req">*</span></label>
+          <input type="text" id="f-father-aadhar" placeholder="12 digit" maxlength="14" oninput="formatAadharAny(this)">
+          <div class="field-error" id="err-father-aadhar">Pita ka Aadhar zaroori hai</div>
+        </div>
+        <div class="field">
+          <label><span class="en">Mother's Aadhar No.</span><span class="hi">माता का आधार नंबर</span><span class="req">*</span></label>
+          <input type="text" id="f-mother-aadhar" placeholder="12 digit" maxlength="14" oninput="formatAadharAny(this)">
+          <div class="field-error" id="err-mother-aadhar">Mata ka Aadhar zaroori hai</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bank Details Card -->
+    <div class="card">
+      <div class="card-title">
+        <div class="card-icon">🏦</div>
+        <div class="card-title-text">
+          <h3>Bank Details / बैंक विवरण</h3>
+          <p>Scholarship ke liye bank account</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">Account Holder</span><span class="hi">खाताधारक</span><span class="req">*</span></label>
+        <select id="f-account-holder-type" onchange="updateAccountHolder(this.value)">
+          <option value="">-- Select --</option>
+          <option value="Self">Self / स्वयं (Student)</option>
+          <option value="Father">Father / पिता</option>
+          <option value="Mother">Mother / माता</option>
+        </select>
+        <div class="field-error" id="err-account-holder-type">Account holder select karein</div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">Account Holder Name</span><span class="hi">खाताधारक का नाम</span><span class="req">*</span></label>
+        <input type="text" id="f-account-holder-name" placeholder="Jaise passbook mein likha ho" oninput="this.value=this.value.toUpperCase()">
+        <div class="field-hint" id="holder-hint" style="color:var(--muted);font-size:11px;margin-top:4px;">Jis vyakti ka account hai unka naam bharein</div>
+        <div class="field-error" id="err-account-holder-name">Account holder ka naam zaroori hai</div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">Bank Name</span><span class="hi">बैंक का नाम</span><span class="req">*</span></label>
+        <input type="text" id="f-bank-name" placeholder="e.g. State Bank of India">
+        <div class="field-error" id="err-bank-name">Bank ka naam zaroori hai</div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">Account Number</span><span class="hi">खाता संख्या</span><span class="req">*</span></label>
+        <input type="text" id="f-account-no" placeholder="Bank account number" maxlength="20" oninput="this.value=this.value.replace(/\D/g,'')">
+        <div class="field-error" id="err-account-no">Account number zaroori hai</div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">IFSC Code</span><span class="hi">आईएफएससी कोड</span><span class="req">*</span></label>
+        <input type="text" id="f-ifsc" placeholder="e.g. SBIN0001234" maxlength="11" oninput="this.value=this.value.toUpperCase()">
+        <div class="field-hint">11 character IFSC code (passbook pe milega)</div>
+        <div class="field-error" id="err-ifsc">Valid IFSC code zaroori hai</div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="goStep2()">अगला चरण / Next Step →</button>
+
+  </div><!-- /screen-1 -->
+
+
+  <!-- ═══ SCREEN 2: ADDRESS + ACADEMIC ═══ -->
+  <div id="screen-2" class="screen">
+
+    <!-- Address -->
+    <div class="card">
+      <div class="card-title">
+        <div class="card-icon">🏠</div>
+        <div class="card-title-text">
+          <h3>Address / पता</h3>
+          <p>Permanent address likhein</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">Village / Town</span><span class="hi">ग्राम / शहर</span><span class="req">*</span></label>
+        <input type="text" id="f-village" placeholder="">
+        <div class="field-error" id="err-village">Village/Town zaroori hai</div>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label><span class="en">P.O.</span><span class="hi">पो.</span></label>
+          <input type="text" id="f-po" placeholder="">
+        </div>
+        <div class="field">
+          <label><span class="en">P.S. / Thana</span><span class="hi">थाना</span></label>
+          <input type="text" id="f-ps" placeholder="">
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label><span class="en">District</span><span class="hi">जिला</span><span class="req">*</span></label>
+          <input type="text" id="f-district" placeholder="Jamui...">
+          <div class="field-error" id="err-district">District zaroori hai</div>
+        </div>
+        <div class="field">
+          <label><span class="en">State</span><span class="hi">राज्य</span></label>
+          <input type="text" id="f-state" placeholder="Bihar" value="Bihar">
+        </div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">PIN Code</span><span class="hi">पिन कोड</span></label>
+        <input type="text" id="f-pin" placeholder="6 digit PIN" maxlength="6">
+      </div>
+    </div>
+
+    <!-- Academic -->
+    <div class="card">
+      <div class="card-title">
+        <div class="card-icon">📚</div>
+        <div class="card-title-text">
+          <h3>Academic Info / शैक्षणिक जानकारी</h3>
+          <p>Previous school details</p>
+        </div>
+      </div>
+
+
+      <div class="field">
+          <label><span class="en">Admission Class</span><span class="hi">प्रवेश कक्षा</span><span class="req">*</span></label>
+          <select id="f-adm-class" onchange="updateClassFields(this.value)">
+            <option value="">-- Select --</option>
+            <option value="1">Class 1 / कक्षा 1</option>
+            <option value="2">Class 2 / कक्षा 2</option>
+            <option value="3">Class 3 / कक्षा 3</option>
+            <option value="4">Class 4 / कक्षा 4</option>
+            <option value="5">Class 5 / कक्षा 5</option>
+            <option value="6">Class 6 / कक्षा 6</option>
+            <option value="7">Class 7 / कक्षा 7</option>
+            <option value="8">Class 8 / कक्षा 8</option>
+          </select>
+          <div class="field-error" id="err-adm-class">Class select karein</div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">Previous School Name</span><span class="hi">पिछला विद्यालय</span></label>
+        <input type="text" id="f-prev-school" placeholder="Pichle school ka naam (Class 1 ke liye NA likhein)">
+        <div class="field-error" id="err-prev-school">Previous school ka naam zaroori hai</div>
+      </div>
+
+      <div class="field">
+          <label><span class="en">Passing Year</span><span class="hi">उत्तीर्ण वर्ष</span><span class="req">*</span></label>
+          <select id="f-pass-year">
+            <option value="">-- Year --</option>
+            <option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option>
+          </select>
+          <div class="field-error" id="err-pass-year">Year select karein</div>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label><span class="en">Medium</span><span class="hi">माध्यम</span><span class="req">*</span></label>
+          <select id="f-medium">
+            <option value="">-- Select --</option>
+            <option>Hindi</option><option>English</option><option>Urdu</option><option>Other</option>
+          </select>
+          <div class="field-error" id="err-medium">Medium select karein</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label><span class="en">Blood Group</span><span class="hi">रक्त समूह</span></label>
+          <select id="f-blood">
+            <option value="">-- Select --</option>
+            <option>A+</option><option>A−</option><option>B+</option><option>B−</option>
+            <option>O+</option><option>O−</option><option>AB+</option><option>AB−</option>
+          </select>
+        </div>
+        <div class="field">
+          <label><span class="en">Differently Abled?</span><span class="hi">दिव्यांग?</span></label>
+          <select id="f-disabled">
+            <option value="No">No / नहीं</option>
+            <option value="Yes">Yes / हाँ</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="goStep3()">अगला चरण / Next Step →</button>
+    <button class="btn-secondary" onclick="goBack(1)">← वापस / Back</button>
+
+  </div><!-- /screen-2 -->
+
+
+  <!-- ═══ SCREEN 3: DOCUMENTS ═══ -->
+  <div id="screen-3" class="screen">
+
+    <div class="card">
+      <div class="card-title">
+        <div class="card-icon">📎</div>
+        <div class="card-title-text">
+          <h3>Documents / दस्तावेज़</h3>
+          <p>* Required · Baaki Optional</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">Student Aadhar Card</span><span class="hi">छात्र आधार कार्ड</span><span class="req">*</span></label>
+        <label class="upload-box" id="box-aadhar" for="up-aadhar">
+          <div class="up-icon">🪪</div>
+          <div class="up-title">Student Aadhar Upload</div>
+          <div class="up-sub">JPG, PNG ya PDF · Max 5MB</div>
+          <input type="file" id="up-aadhar" accept="image/*,.pdf" onchange="markUploaded('box-aadhar', 'Student Aadhar', this)">
+        </label>
+        <div class="field-error" id="err-aadhar">Aadhar card zaroori hai</div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">Father / Mother Aadhar</span><span class="hi">पिता / माता का आधार</span></label>
+        <label class="upload-box" id="box-parent-aadhar" for="up-parent-aadhar">
+          <div class="up-icon">🪪</div>
+          <div class="up-title">Parent Aadhar Upload (Optional)</div>
+          <div class="up-sub">Father ya Mother kisi ek ka · JPG, PNG ya PDF · Max 5MB</div>
+          <input type="file" id="up-parent-aadhar" accept="image/*,.pdf" onchange="markUploaded('box-parent-aadhar', 'Parent Aadhar', this)">
+        </label>
+      </div>
+
+      <div class="field" id="slc-field">
+        <label>
+          <span class="en">School Leaving Certificate</span>
+          <span class="hi">विद्यालय छोड़ने का प्रमाण पत्र</span>
+          <span class="req" id="slc-req-star">*</span>
+        </label>
+        <label class="upload-box" id="box-slc" for="up-slc">
+          <div class="up-icon">📄</div>
+          <div class="up-title">SLC / TC Upload karein</div>
+          <div class="up-sub" id="slc-sub">JPG, PNG ya PDF · Max 5MB</div>
+          <input type="file" id="up-slc" accept="image/*,.pdf" onchange="markUploaded('box-slc', 'School Leaving Certificate', this)">
+        </label>
+        <div class="field-error" id="err-slc">School Leaving Certificate zaroori hai (Class 6-8)</div>
+      </div>
+
+      <div class="field">
+        <label><span class="en">Caste Certificate</span><span class="hi">जाति प्रमाण पत्र</span></label>
+        <label class="upload-box" id="box-caste" for="up-caste">
+          <div class="up-icon">📜</div>
+          <div class="up-title">Caste Certificate (if applicable)</div>
+          <div class="up-sub">JPG, PNG ya PDF · Max 5MB · Optional</div>
+          <input type="file" id="up-caste" accept="image/*,.pdf" onchange="markUploaded('box-caste', 'Caste Certificate', this)">
+        </label>
+      </div>
+
+      <div class="field">
+        <label><span class="en">Income Certificate</span><span class="hi">आय प्रमाण पत्र</span></label>
+        <label class="upload-box" id="box-income" for="up-income">
+          <div class="up-icon">💰</div>
+          <div class="up-title">Income Certificate (if applicable)</div>
+          <div class="up-sub">JPG, PNG ya PDF · Max 5MB · Optional</div>
+          <input type="file" id="up-income" accept="image/*,.pdf" onchange="markUploaded('box-income', 'Income Certificate', this)">
+        </label>
+      </div>
+
+    </div>
+
+    <!-- Declaration -->
+    <div class="card">
+      <div class="card-title">
+        <div class="card-icon">✍️</div>
+        <div class="card-title-text">
+          <h3>Declaration / घोषणा</h3>
+        </div>
+      </div>
+      <p style="font-size:12px; color:var(--muted); line-height:1.8; margin-bottom:14px;">
+        मैं घोषणा करता/करती हूँ कि ऊपर दी गई सभी जानकारी सही और सत्य है।<br>
+        <em>I hereby declare that all information provided above is true and correct.</em>
+      </p>
+      <div class="field" style="display:flex; align-items:center; gap:10px;">
+        <input type="checkbox" id="f-declare" style="width:20px; height:20px; cursor:pointer; accent-color:var(--primary);">
+        <label for="f-declare" style="font-size:13px; font-weight:600; cursor:pointer; margin:0;">
+          Main agree karta/karti hoon / मैं सहमत हूँ <span style="color:var(--red)">*</span>
+        </label>
+      </div>
+      <div class="field-error" id="err-declare">Declaration zaroori hai</div>
+    </div>
+
+    <button class="btn-primary" id="submit-btn" onclick="submitForm()">
+      ✅ Form Submit Karein / फॉर्म जमा करें
+    </button>
+    <button class="btn-secondary" onclick="goBack(2)">← वापस / Back</button>
+
+  </div><!-- /screen-3 -->
+
+
+  <!-- ═══ SCREEN: DUPLICATE ═══ -->
+  <div id="screen-dup" class="screen">
+    <div class="alert-card">
+      <div class="alert-icon">⚠️</div>
+      <h2 style="color:var(--red)">Pehle se Registered!</h2>
+      <p>
+        Is mobile number se pehle registration ho chuki hai.<br><br>
+        <strong>Ek mobile number se sirf ek registration allowed hai.</strong><br><br>
+        Agar koi problem hai toh school se sampark karein.
+      </p>
+      <button class="btn-secondary" style="margin-top:20px; width:auto; padding:10px 24px;" onclick="goBack(1)">← Wapas Jaao</button>
+    </div>
+  </div>
+
+
+  <!-- ═══ SCREEN: SUCCESS ═══ -->
+  <div id="screen-success" class="screen">
+
+    <div class="reg-card">
+      <div class="label">🎉 Registration Successful!</div>
+      <div class="reg-number" id="s-reg-num">UMS-2024-0001</div>
+      <div class="name" id="s-name">Student Name</div>
+      <div class="date" id="s-date">Submitted on: —</div>
+    </div>
+
+    <div class="save-note">
+      📸 <strong>Screenshot zaroor lein!</strong> Yeh Registration Number aapka proof hai. School mein admission ke waqt yeh number dikhana hoga.
+    </div>
+
+    <div class="success-details">
+      <h3>📋 Registration Summary</h3>
+      <div class="detail-row"><span class="dl">Registration No.</span><span class="dv" id="sd-reg">—</span></div>
+      <div class="detail-row"><span class="dl">Name / नाम</span><span class="dv" id="sd-name">—</span></div>
+      <div class="detail-row"><span class="dl">Father's Name</span><span class="dv" id="sd-father">—</span></div>
+      <div class="detail-row"><span class="dl">Mobile</span><span class="dv" id="sd-mobile">—</span></div>
+      <div class="detail-row"><span class="dl">Category</span><span class="dv" id="sd-category">—</span></div>
+      <div class="detail-row"><span class="dl">Previous School</span><span class="dv" id="sd-school">—</span></div>
+      <div class="detail-row"><span class="dl">District</span><span class="dv" id="sd-district">—</span></div>
+      <div class="detail-row"><span class="dl">Status</span><span class="dv" style="color:var(--green)">✅ Submitted</span></div>
+    </div>
+
+    <button class="btn-primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+
+  </div><!-- /screen-success -->
+
+</div><!-- /container -->
+
+<script>
+// ══════════════════════════════════════
+// 👇 ADMIN: Apna Google Apps Script URL
+// ══════════════════════════════════════
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbxw55x8gUpaC8pt97rclS_v1nd8CSy2zkIR6kVSRN1JAWT69sFMrgggqnS4dN5nXqo4/exec";
+// ══════════════════════════════════════
+
+let aadharCheckTimer = null;
+let uploadedDocs = {};
+
+// ── Photo Preview ──
+function previewPhoto(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.getElementById('photo-img');
+      img.src = e.target.result;
+      img.style.display = 'block';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+// ── Aadhar Format ──
+function formatAadhar(input) {
+  let v = input.value.replace(/\D/g, '').substring(0, 12);
+  input.value = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+}
+
+function formatAadharAny(input) {
+  let v = input.value.replace(/\D/g, '').substring(0, 12);
+  input.value = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+}
+
+// ── Upload Box ──
+function markUploaded(boxId, label, input) {
+  if (input.files && input.files[0]) {
+    document.getElementById(boxId).classList.add('uploaded');
+    document.querySelector('#' + boxId + ' .up-title').textContent = '✅ ' + input.files[0].name;
+    uploadedDocs[label] = input.files[0].name;
+  }
+}
+
+// ── Aadhar Duplicate Check ──
+function checkAadhar(input) {
+  const val = input.value.replace(/\s/g, '');
+  const status = document.getElementById('aadhar-status');
+  const errDup = document.getElementById('err-aadhar-dup');
+
+  status.style.display = 'none';
+  errDup.classList.remove('show');
+  input.classList.remove('valid', 'error');
+
+  if (val.length !== 12) return;
+
+  status.textContent = '🔄';
+  status.style.display = 'block';
+
+  clearTimeout(aadharCheckTimer);
+  aadharCheckTimer = setTimeout(async () => {
+    if (SHEET_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+      input.classList.add('valid');
+      status.textContent = '✅';
+      return;
+    }
+    try {
+      const res = await fetch(`${SHEET_URL}?action=checkAadhar&aadhar=${val}`);
+      const data = await res.json();
+      if (data.exists) {
+        input.classList.add('error');
+        input.classList.remove('valid');
+        status.textContent = '❌';
+        errDup.classList.add('show');
+      } else {
+        input.classList.add('valid');
+        input.classList.remove('error');
+        status.textContent = '✅';
+        errDup.classList.remove('show');
+      }
+    } catch {
+      input.classList.add('valid');
+      status.textContent = '✅';
+    }
+  }, 800);
+}
+
+// ── Step Navigation ──
+function showScreen(n) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + n).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateSteps(current) {
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('step' + i + '-ind');
+    if (!el) continue;
+    el.classList.remove('active', 'done');
+    if (i < current) el.classList.add('done');
+    else if (i === current) el.classList.add('active');
+  }
+  for (let i = 1; i <= 3; i++) {
+    const line = document.getElementById('line' + i);
+    if (!line) continue;
+    line.classList.toggle('done', i < current);
+  }
+}
+
+function goBack(step) {
+  showScreen(step);
+  updateSteps(step);
+}
+
+function showError(id, show) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('show', show);
+}
+
+// ── Step 1 → 2 ──
+function goStep2() {
+  let valid = true;
+
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { showError('err-name', true); valid = false; } else showError('err-name', false);
+
+  const dob = document.getElementById('f-dob').value;
+  if (!dob) { showError('err-dob', true); valid = false; } else showError('err-dob', false);
+
+  const gender = document.getElementById('f-gender').value;
+  if (!gender) { showError('err-gender', true); valid = false; } else showError('err-gender', false);
+
+  const father = document.getElementById('f-father').value.trim();
+  if (!father) { showError('err-father', true); valid = false; } else showError('err-father', false);
+
+  const mother = document.getElementById('f-mother').value.trim();
+  if (!mother) { showError('err-mother', true); valid = false; } else showError('err-mother', false);
+
+  const mobile = document.getElementById('f-mobile').value.replace(/\D/g,'');
+  if (mobile.length !== 10) { showError('err-mobile', true); valid = false; } else showError('err-mobile', false);
+
+  const category = document.getElementById('f-category').value;
+  if (!category) { showError('err-category', true); valid = false; } else showError('err-category', false);
+
+  const aadharNum = document.getElementById('f-aadhar').value.replace(/\s/g,'');
+  if (aadharNum.length !== 12) { showError('err-aadhar-num', true); valid = false; } else showError('err-aadhar-num', false);
+
+  // Aadhar duplicate check
+  if (document.getElementById('err-aadhar-dup').classList.contains('show')) { valid = false; }
+
+  const fatherAadhar = document.getElementById('f-father-aadhar').value.replace(/\s/g,'');
+  if (fatherAadhar.length !== 12) { showError('err-father-aadhar', true); valid = false; } else showError('err-father-aadhar', false);
+
+  const motherAadhar = document.getElementById('f-mother-aadhar').value.replace(/\s/g,'');
+  if (motherAadhar.length !== 12) { showError('err-mother-aadhar', true); valid = false; } else showError('err-mother-aadhar', false);
+
+  const bankName = document.getElementById('f-bank-name').value.trim();
+  if (!bankName) { showError('err-bank-name', true); valid = false; } else showError('err-bank-name', false);
+
+  const accountHolderType = document.getElementById('f-account-holder-type').value;
+  if (!accountHolderType) { showError('err-account-holder-type', true); valid = false; } else showError('err-account-holder-type', false);
+
+  const accountHolderName = document.getElementById('f-account-holder-name').value.trim();
+  if (!accountHolderName) { showError('err-account-holder-name', true); valid = false; } else showError('err-account-holder-name', false);
+
+  const accountNo = document.getElementById('f-account-no').value.trim();
+  if (!accountNo) { showError('err-account-no', true); valid = false; } else showError('err-account-no', false);
+
+  const ifsc = document.getElementById('f-ifsc').value.trim();
+  if (ifsc.length !== 11) { showError('err-ifsc', true); valid = false; } else showError('err-ifsc', false);
+
+  if (!valid) {
+    window.scrollTo({ top: 200, behavior: 'smooth' });
+    return;
+  }
+
+  showScreen(2);
+  updateSteps(2);
+}
+
+// ── Step 2 → 3 ──
+function goStep3() {
+  let valid = true;
+
+  const admClass = document.getElementById('f-adm-class').value;
+  if (!admClass) { showError('err-adm-class', true); valid = false; } else showError('err-adm-class', false);
+
+  const village = document.getElementById('f-village').value.trim();
+  if (!village) { showError('err-village', true); valid = false; } else showError('err-village', false);
+
+  const district = document.getElementById('f-district').value.trim();
+  if (!district) { showError('err-district', true); valid = false; } else showError('err-district', false);
+
+  const prevSchool = document.getElementById('f-prev-school').value.trim();
+  // Optional field - no validation needed
+
+  const passYear = document.getElementById('f-pass-year').value;
+  if (!passYear) { showError('err-pass-year', true); valid = false; } else showError('err-pass-year', false);
+
+  const medium = document.getElementById('f-medium').value;
+  if (!medium) { showError('err-medium', true); valid = false; } else showError('err-medium', false);
+
+  if (!valid) {
+    window.scrollTo({ top: 200, behavior: 'smooth' });
+    return;
+  }
+
+  showScreen(3);
+  updateSteps(3);
+}
+
+// ── Update fields based on class ──
+function updateClassFields(cls) {
+  const clsNum = parseInt(cls || '0');
+  const schoolInput = document.getElementById('f-prev-school');
+  const slcReqStar = document.getElementById('slc-req-star');
+  const slcSub = document.getElementById('slc-sub');
+  const prevSchoolLabel = document.querySelector('label[for="f-prev-school"]') || schoolInput.previousElementSibling;
+
+  if (clsNum === 1) {
+    schoolInput.placeholder = 'Pehli baar school mein aa rahe hain toh NA likhein';
+  } else {
+    schoolInput.placeholder = `Class ${clsNum - 1} wale school ka naam`;
+  }
+
+  // Class 6-8: Prev school + SLC zaroori
+  if (clsNum >= 6 && clsNum <= 8) {
+    slcReqStar.style.display = 'inline';
+    slcSub.textContent = 'JPG, PNG ya PDF · Max 5MB · ⚠️ Zaroori (Class 6-8)';
+    slcSub.style.color = 'var(--red)';
+  } else {
+    slcReqStar.style.display = 'none';
+    slcSub.textContent = 'JPG, PNG ya PDF · Max 5MB · Optional (Class 1-5)';
+    slcSub.style.color = '';
+  }
+}
+
+// ── Auto-fill account holder name ──
+function updateAccountHolder(type) {
+  const nameInput = document.getElementById('f-account-holder-name');
+  const hint = document.getElementById('holder-hint');
+  const studentName = document.getElementById('f-name').value.trim();
+  const fatherName = document.getElementById('f-father').value.trim();
+  const motherName = document.getElementById('f-mother').value.trim();
+
+  if (type === 'Self' && studentName) {
+    nameInput.value = studentName;
+    hint.textContent = "Student ka naam auto-fill hua — zaroorat ho toh badlein";
+  } else if (type === 'Father' && fatherName) {
+    nameInput.value = fatherName;
+    hint.textContent = "Pita ka naam auto-fill hua — zaroorat ho toh badlein";
+  } else if (type === 'Mother' && motherName) {
+    nameInput.value = motherName;
+    hint.textContent = "Mata ka naam auto-fill hua — zaroorat ho toh badlein";
+  } else {
+    nameInput.value = '';
+    hint.textContent = 'Jis vyakti ka account hai unka naam bharein';
+  }
+}
+
+// ── Generate Registration Number ──
+function generateRegNo(serial) {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const padded = String(serial).padStart(4, '0');
+  return `UMS-${year}-${month}-${padded}`;
+}
+
+// ── File to Base64 ──
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    if (!file) { resolve(null); return; }
+    const reader = new FileReader();
+    reader.onload = e => resolve({
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      data: e.target.result.split(',')[1]
+    });
+    reader.onerror = () => resolve(null);
+    reader.readAsDataURL(file);
+  });
+}
+
+// ── Upload single file to Apps Script ──
+async function uploadSingleFile(regNo, fileObj, fileKey) {
+  if (!fileObj) return null;
+  try {
+    const res = await fetch(SHEET_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        action: 'uploadFile',
+        reg_no: regNo,
+        file_key: fileKey,
+        file: fileObj
+      })
+    });
+    const result = await res.json();
+    return result.link || null;
+  } catch(e) {
+    return null;
+  }
+}
+
+// ── Final Submit ──
+async function submitForm() {
+  let valid = true;
+
+  if (!document.getElementById('up-aadhar').files.length) { showError('err-aadhar', true); valid = false; } else showError('err-aadhar', false);
+
+  const selectedClass = parseInt(document.getElementById('f-adm-class').value || '0');
+  if (selectedClass >= 6 && selectedClass <= 8) {
+    if (!document.getElementById('up-slc').files.length) { showError('err-slc', true); valid = false; } else showError('err-slc', false);
+  } else {
+    showError('err-slc', false);
+  }
+
+  if (!document.getElementById('f-declare').checked) { showError('err-declare', true); valid = false; } else showError('err-declare', false);
+
+  if (!valid) return;
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+
+  const mobile = document.getElementById('f-mobile').value.replace(/\D/g,'');
+  const now = new Date();
+  const timestamp = now.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+
+  // Step 1: Submit form data (without files)
+  btn.innerHTML = '<span class="spinner"></span> Data save ho raha hai...';
+
+  const data = {
+    action: 'submit',
+    timestamp,
+    name: document.getElementById('f-name').value.trim(),
+    dob: document.getElementById('f-dob').value,
+    gender: document.getElementById('f-gender').value,
+    father_name: document.getElementById('f-father').value.trim(),
+    mother_name: document.getElementById('f-mother').value.trim(),
+    mobile,
+    religion: document.getElementById('f-religion').value,
+    category: document.getElementById('f-category').value,
+    aadhar: document.getElementById('f-aadhar').value.trim(),
+    father_aadhar: document.getElementById('f-father-aadhar').value.trim(),
+    mother_aadhar: document.getElementById('f-mother-aadhar').value.trim(),
+    bank_name: document.getElementById('f-bank-name').value.trim(),
+    account_holder_type: document.getElementById('f-account-holder-type').value,
+    account_holder_name: document.getElementById('f-account-holder-name').value.trim(),
+    account_no: document.getElementById('f-account-no').value.trim(),
+    ifsc: document.getElementById('f-ifsc').value.trim(),
+    village: document.getElementById('f-village').value.trim(),
+    po: document.getElementById('f-po').value.trim(),
+    ps: document.getElementById('f-ps').value.trim(),
+    district: document.getElementById('f-district').value.trim(),
+    state: document.getElementById('f-state').value.trim(),
+    pin: document.getElementById('f-pin').value.trim(),
+    prev_school: document.getElementById('f-prev-school').value.trim(),
+    pass_year: document.getElementById('f-pass-year').value,
+    admission_class: document.getElementById('f-adm-class').value,
+    medium: document.getElementById('f-medium').value,
+    blood_group: document.getElementById('f-blood').value,
+    disabled: document.getElementById('f-disabled').value,
+  };
+
+  try {
+    let regNo;
+    if (SHEET_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+      regNo = generateRegNo(Math.floor(Math.random() * 90) + 10);
+    } else {
+      const res = await fetch(SHEET_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      if (result.status === 'success' && result.reg_no) {
+        regNo = result.reg_no;
+      } else if (result.status === 'duplicate') {
+        alert('⚠️ Is Aadhar number se pehle se registration ho chuki hai!');
+        btn.disabled = false;
+        btn.innerHTML = '✅ Form Submit Karein / फॉर्म जमा करें';
+        return;
+      } else {
+        throw new Error(result.message || 'Unknown error');
+      }
+
+      // Step 2: Upload files one by one
+      const files = [
+        { el: 'up-aadhar',        key: 'student_aadhar', label: 'Student Aadhar' },
+        { el: 'up-slc',           key: 'slc',            label: 'SLC' },
+        { el: 'up-parent-aadhar', key: 'parent_aadhar',  label: 'Parent Aadhar' },
+        { el: 'up-caste',         key: 'caste',          label: 'Caste Cert' },
+        { el: 'up-income',        key: 'income',         label: 'Income Cert' },
+      ];
+
+      for (const f of files) {
+        const fileInput = document.getElementById(f.el);
+        if (!fileInput.files[0]) continue;
+        btn.innerHTML = `<span class="spinner"></span> ${f.label} upload ho raha hai...`;
+        const b64 = await fileToBase64(fileInput.files[0]);
+        await uploadSingleFile(regNo, b64, f.key);
+      }
+    }
+
+    data.reg_no = regNo;
+    showSuccessScreen(data, regNo, timestamp);
+
+  } catch (err) {
+    alert('❌ Error: ' + err.message + '\nInternet check karein aur dobara try karein.');
+    btn.disabled = false;
+    btn.innerHTML = '✅ Form Submit Karein / फॉर्म जमा करें';
+  }
+}
+
+function showSuccessScreen(data, regNo, timestamp) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-success').classList.add('active');
+  updateSteps(4);
+
+  document.getElementById('s-reg-num').textContent = regNo;
+  document.getElementById('s-name').textContent = data.name;
+  document.getElementById('s-date').textContent = 'Submitted: ' + timestamp;
+
+  document.getElementById('sd-reg').textContent = regNo;
+  document.getElementById('sd-name').textContent = data.name;
+  document.getElementById('sd-father').textContent = data.father_name;
+  document.getElementById('sd-mobile').textContent = data.mobile;
+  document.getElementById('sd-category').textContent = data.category;
+  document.getElementById('sd-school').textContent = data.prev_school;
+  document.getElementById('sd-district').textContent = data.district;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Sticky mini bar on scroll ──
+const stickyMini = document.getElementById('sticky-mini');
+const schoolHeader = document.querySelector('.school-header');
+stickyMini.style.display = 'none';
+
+window.addEventListener('scroll', () => {
+  const headerBottom = schoolHeader.getBoundingClientRect().bottom;
+  stickyMini.style.display = headerBottom < 0 ? 'flex' : 'none';
+});
+</script>
+</body>
+</html>
