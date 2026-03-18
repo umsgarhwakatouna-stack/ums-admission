@@ -1,2 +1,2 @@
-# ums-admission-2026
+# ums-admission
 U.M.S GARHWA KATOUNA ADDMISION DATA 2026
