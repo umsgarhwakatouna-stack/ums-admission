@@ -442,7 +442,7 @@
   .photo-box:hover { border-color: var(--primary); }
   .photo-box input { position: absolute; inset: 0; opacity: 0; cursor: pointer; z-index: 2; }
   .photo-box span { font-size: 10px; color: var(--muted); font-weight: 500; margin-top: 4px; z-index: 1; }
-  #photo-img { width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; inset: 0; z-index: 0; }
+  #photo-img { width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; inset: 0; z-index: 3; }
 
   .photo-rules { flex: 1; }
   .photo-rules p { font-size: 11px; color: var(--muted); line-height: 1.8; }
@@ -1469,7 +1469,7 @@
 // ══════════════════════════════════════
 // 👇 ADMIN: Apna Google Apps Script URL
 // ══════════════════════════════════════
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbxw55x8gUpaC8pt97rclS_v1nd8CSy2zkIR6kVSRN1JAWT69sFMrgggqnS4dN5nXqo4/exec";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbwflO0wJaZadz6_EtBjtYodcsmRWNMHrvldumBlwn575xGQv0TLSeriQkBQs5AxOC9n/exec";
 // ══════════════════════════════════════
 
 let aadharCheckTimer = null;
@@ -1499,6 +1499,11 @@ function previewPhoto(input) {
       const img = document.getElementById('photo-img');
       img.src = e.target.result;
       img.style.display = 'block';
+      // Hide icon and text
+      const spans = document.querySelectorAll('.photo-box span');
+      spans.forEach(s => s.style.display = 'none');
+      // Keep input on top so user can re-select
+      input.style.zIndex = '4';
     };
     reader.readAsDataURL(input.files[0]);
   }
