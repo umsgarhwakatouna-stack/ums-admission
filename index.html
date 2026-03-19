@@ -1880,8 +1880,9 @@ async function submitForm() {
         throw new Error(result.message || 'Unknown error');
       }
 
-      // Step 2: Upload files one by one
+      // Step 2: Upload files one by one — including photo
       const files = [
+        { el: 'photo-input',      key: 'photo',          label: 'Photo' },
         { el: 'up-aadhar',        key: 'student_aadhar', label: 'Student Aadhar' },
         { el: 'up-slc',           key: 'slc',            label: 'SLC' },
         { el: 'up-parent-aadhar', key: 'parent_aadhar',  label: 'Parent Aadhar' },
@@ -1989,7 +1990,7 @@ function printForm() {
 
 // ── Next Student Admission ──
 function nextStudent() {
-  // Reset form
+  uploadedDocs = {};
   document.getElementById('reg-form').reset();
 
   // Reset photo
@@ -2003,7 +2004,6 @@ function nextStudent() {
   document.getElementById('declare-tick').style.display = 'none';
 
   // Reset upload boxes
-  uploadedDocs = {};
   document.querySelectorAll('.upload-box').forEach(box => {
     box.classList.remove('uploaded');
     const title = box.querySelector('.up-title');
@@ -2032,12 +2032,155 @@ function nextStudent() {
   updateSteps(1);
 
   // Reset submit button
-  const btn = document.getElementById('submit-btn');
-  btn.disabled = false;
-  btn.innerHTML = '✅ Form Submit Karein / फॉर्म जमा करें';
+  document.getElementById('submit-btn').disabled = false;
+  document.getElementById('submit-btn').innerHTML = '✅ Form Submit Karein / फॉर्म जमा करें';
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+  // ── Build PDF content with full inline styles ──
+  const get = id => { const el = document.getElementById(id); return el ? el.textContent : '—'; };
+  const photoSrc = (() => {
+    const img = document.getElementById('photo-img');
+    return (img && img.style.display !== 'none' && img.src) ? img.src : null;
+  })();
+
+  const photoHTML = photoSrc
+    ? `<img src="${photoSrc}" style="width:90px;height:110px;object-fit:cover;border:1px solid #000;">`
+    : `<div style="width:90px;height:110px;border:1px solid #000;display:flex;align-items:center;justify-content:center;font-size:9px;color:#999;">PHOTO</div>`;
+
+  const row = (label, val1, label2='', val2='') => `
+    <tr>
+      <td style="background:#f0f0f0;font-weight:bold;padding:4px 6px;border:1px solid #aaa;font-size:10px;width:20%;">${label}</td>
+      <td style="padding:4px 6px;border:1px solid #aaa;font-size:10px;width:${label2 ? '30%' : '80%'};">${val1}</td>
+      ${label2 ? `<td style="background:#f0f0f0;font-weight:bold;padding:4px 6px;border:1px solid #aaa;font-size:10px;width:20%;">${label2}</td>
+      <td style="padding:4px 6px;border:1px solid #aaa;font-size:10px;width:30%;">${val2}</td>` : ''}
+    </tr>`;
+
+  const secTitle = (title) =>
+    `<div style="background:#1a3a6b;color:#fff;font-weight:bold;font-size:11px;padding:3px 8px;margin:8px 0 4px;">${title}</div>`;
+
+  const content = `
+    <div style="font-family:Arial,sans-serif;font-size:11px;color:#000;padding:15mm;width:190mm;">
+
+      <!-- Header -->
+      <div style="text-align:center;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:10px;">
+        <div style="font-size:16px;font-weight:bold;text-transform:uppercase;">उत्क्रमित मध्य विद्यालय गढ़वा, कटौना</div>
+        <div style="font-size:11px;margin-top:3px;">U.M.S Garhwa Katouna &nbsp;|&nbsp; Estd. 1972 &nbsp;|&nbsp; UDISE: 10370902001</div>
+        <div style="font-size:11px;">Bihar Govt. School &nbsp;|&nbsp; Dist: Jamui, Bihar</div>
+        <div style="font-size:13px;font-weight:bold;text-decoration:underline;text-transform:uppercase;margin-top:5px;">
+          छात्र प्रवेश पंजीकरण फॉर्म / Student Admission Registration Form
+        </div>
+        <div style="margin-top:6px;">
+          <span style="border:2px solid #000;padding:4px 16px;font-size:14px;font-weight:bold;">${regNo}</span>
+        </div>
+      </div>
+
+      <!-- Photo + Personal -->
+      <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;">
+        <div style="flex:1;">
+          ${secTitle('व्यक्तिगत जानकारी / Personal Details')}
+          <table style="width:100%;border-collapse:collapse;">
+            ${row('नाम / Name', get('p-name'))}
+            ${row('Adm. No.', get('p-adm-no'), 'Roll No.', get('p-roll-no'))}
+            ${row('DOB / जन्म तिथि', get('p-dob'), 'Gender / लिंग', get('p-gender'))}
+            ${row('Category / वर्ग', get('p-category'), 'Blood Group', get('p-blood'))}
+            ${row('Aadhar No.', get('p-aadhar'))}
+            ${row('Mobile / मोबाइल', get('p-mobile'))}
+          </table>
+        </div>
+        <div style="flex-shrink:0;">${photoHTML}</div>
+      </div>
+
+      <!-- Parents -->
+      ${secTitle('माता-पिता की जानकारी / Parents Details')}
+      <table style="width:100%;border-collapse:collapse;">
+        ${row('Father\'s Name / पिता', get('p-father'))}
+        ${row('Mother\'s Name / माता', get('p-mother'))}
+        ${row('Father\'s Aadhar', get('p-f-aadhar'), 'Mother\'s Aadhar', get('p-m-aadhar'))}
+        ${row('Religion / धर्म', get('p-religion'), 'Caste / वर्ग', get('p-caste-cat'))}
+      </table>
+
+      <!-- Address -->
+      ${secTitle('पता / Address')}
+      <table style="width:100%;border-collapse:collapse;">
+        ${row('Village / ग्राम', get('p-village'), 'P.O.', get('p-po'))}
+        ${row('P.S. / थाना', get('p-ps'), 'PIN', get('p-pin'))}
+        ${row('District / जिला', get('p-district'), 'State / राज्य', get('p-state'))}
+      </table>
+
+      <!-- Academic -->
+      ${secTitle('शैक्षणिक जानकारी / Academic Details')}
+      <table style="width:100%;border-collapse:collapse;">
+        ${row('Admission Class', get('p-class'), 'Medium / माध्यम', get('p-medium'))}
+        ${row('Previous School', get('p-prev-school'))}
+        ${row('Passing Year', get('p-pass-year'), 'Differently Abled', get('p-disabled'))}
+      </table>
+
+      <!-- Bank -->
+      ${secTitle('बैंक विवरण / Bank Details')}
+      <table style="width:100%;border-collapse:collapse;">
+        ${row('Bank Name', get('p-bank'))}
+        ${row('A/C Holder', get('p-ac-holder'), 'Holder Type', get('p-ac-type'))}
+        ${row('Account No.', get('p-ac-no'), 'IFSC Code', get('p-ifsc'))}
+      </table>
+
+      <!-- Declaration -->
+      <div style="border:1px solid #000;padding:6px;font-size:9px;margin:8px 0;font-style:italic;">
+        मैं घोषणा करता/करती हूँ कि ऊपर दी गई सभी जानकारी सही और सत्य है। यदि कोई जानकारी गलत पाई गई तो मेरा प्रवेश निरस्त किया जा सकता है।<br>
+        <em>I hereby declare that all the information provided above is true and correct to the best of my knowledge.</em>
+      </div>
+
+      <!-- Date + Reg -->
+      <div style="text-align:center;font-size:10px;margin:6px 0;">
+        Registration No: <strong>${regNo}</strong> &nbsp;|&nbsp; Date: <strong>${get('p-date')}</strong>
+      </div>
+
+      <!-- Signatures -->
+      <div style="display:flex;justify-content:space-between;margin-top:30px;">
+        <div style="text-align:center;width:30%;">
+          <div style="border-top:1px solid #000;margin-bottom:4px;"></div>
+          <div style="font-size:9px;">Applicant's Signature<br>आवेदक के हस्ताक्षर</div>
+        </div>
+        <div style="text-align:center;width:30%;">
+          <div style="border-top:1px solid #000;margin-bottom:4px;"></div>
+          <div style="font-size:9px;">Parent's Signature<br>अभिभावक के हस्ताक्षर</div>
+        </div>
+        <div style="text-align:center;width:30%;">
+          <div style="border-top:1px solid #000;margin-bottom:4px;"></div>
+          <div style="font-size:9px;">Principal's Signature<br>प्राचार्य के हस्ताक्षर</div>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:8px;margin-top:10px;color:#666;">
+        This is a computer generated registration form. &nbsp;|&nbsp; उत्क्रमित मध्य विद्यालय गढ़वा, कटौना
+      </div>
+
+    </div>`;
+
+  // Create temp div — must be visible for html2canvas to render
+  const temp = document.createElement('div');
+  temp.innerHTML = content;
+  temp.style.cssText = 'position:fixed;left:0;top:0;z-index:99999;background:#fff;width:210mm;pointer-events:none;';
+  document.body.appendChild(temp);
+
+  // Small delay to let browser render
+  await new Promise(r => setTimeout(r, 300));
+
+  const opt = {
+    margin: 0,
+    filename: fileName,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      backgroundColor: '#ffffff',
+      windowWidth: 794,
+      scrollY: 0
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
 
 // ── Sticky mini bar on scroll ──
 const stickyMini = document.getElementById('sticky-mini');
