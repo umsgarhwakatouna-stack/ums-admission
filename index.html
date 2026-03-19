@@ -113,16 +113,17 @@
 
   .school-name-en {
     font-family: 'Playfair Display', serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    margin-top: 5px;
+    font-size: 13px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #FFD700, #FFA500, #FFD700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 1.5px;
+    margin-top: 4px;
     text-transform: uppercase;
-    color: #F0C040;
-    border-top: 1px solid rgba(240,192,64,0.4);
-    border-bottom: 1px solid rgba(240,192,64,0.4);
-    padding: 3px 0;
-    display: inline-block;
+    text-shadow: none;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
   }
 
   .school-meta {
@@ -431,15 +432,16 @@
     align-items: center; justify-content: center;
     cursor: pointer;
     position: relative;
+    overflow: hidden;
     flex-shrink: 0;
     background: #fafbfc;
     transition: all 0.2s;
-    overflow: hidden;
   }
 
   .photo-box:hover { border-color: var(--primary); }
-  .photo-box span { font-size: 10px; color: var(--muted); font-weight: 500; margin-top: 4px; z-index: 1; }
-  #photo-img { width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; inset: 0; z-index: 2; }
+  .photo-box input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .photo-box span { font-size: 10px; color: var(--muted); font-weight: 500; margin-top: 4px; }
+  #photo-img { width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; inset: 0; }
 
   .photo-rules { flex: 1; }
   .photo-rules p { font-size: 11px; color: var(--muted); line-height: 1.8; }
@@ -858,19 +860,12 @@
         </div>
       </div>
       <div class="photo-upload-wrap">
-        <div style="position:relative; width:90px; height:105px; flex-shrink:0;">
-          <!-- Clickable area -->
-          <div class="photo-box" id="photo-box-label"
-            onclick="document.getElementById('photo-input').click()"
-            style="width:100%;height:100%;position:absolute;top:0;left:0;z-index:3;background:transparent;border:2px dashed var(--border);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;">
-            <span id="photo-icon" style="font-size:24px;">📷</span>
-            <span id="photo-text" style="font-size:10px;color:var(--muted);margin-top:4px;">Photo</span>
-          </div>
-          <!-- Preview image -->
-          <img id="photo-img" alt="Photo"
-            style="width:100%;height:100%;object-fit:cover;display:none;position:absolute;top:0;left:0;z-index:1;border-radius:10px;border:2px solid var(--green);">
-        </div>
-        <input type="file" id="photo-input" accept="image/*" style="display:none;" onchange="previewPhoto(this)">
+        <label class="photo-box" for="photo-input" id="photo-box-label">
+          <span>📷</span>
+          <span>Photo</span>
+          <img id="photo-img" alt="Photo">
+          <input type="file" id="photo-input" accept="image/*" onchange="previewPhoto(this)">
+        </label>
         <div class="photo-rules">
           <p>
             <strong>Rules / नियम:</strong><br>
@@ -1503,12 +1498,6 @@ function previewPhoto(input) {
       const img = document.getElementById('photo-img');
       img.src = e.target.result;
       img.style.display = 'block';
-      // Hide icon/text, keep click box visible but transparent
-      document.getElementById('photo-icon').style.display = 'none';
-      document.getElementById('photo-text').style.display = 'none';
-      document.getElementById('photo-box-label').style.border = 'none';
-      document.getElementById('photo-box-label').style.background = 'transparent';
-      showError('err-photo', false);
     };
     reader.readAsDataURL(input.files[0]);
   }
@@ -1890,9 +1879,8 @@ async function submitForm() {
         throw new Error(result.message || 'Unknown error');
       }
 
-      // Step 2: Upload files one by one — including photo
+      // Step 2: Upload files one by one
       const files = [
-        { el: 'photo-input',      key: 'photo',          label: 'Photo' },
         { el: 'up-aadhar',        key: 'student_aadhar', label: 'Student Aadhar' },
         { el: 'up-slc',           key: 'slc',            label: 'SLC' },
         { el: 'up-parent-aadhar', key: 'parent_aadhar',  label: 'Parent Aadhar' },
@@ -2000,21 +1988,16 @@ function printForm() {
 
 // ── Next Student Admission ──
 function nextStudent() {
-  // Reset uploaded docs tracker
   uploadedDocs = {};
-  // Reset all form fields
+
   document.getElementById('reg-form').reset();
 
   // Reset photo
   document.getElementById('photo-img').style.display = 'none';
   document.getElementById('photo-img').src = '';
-  document.getElementById('photo-icon').style.display = 'inline';
-  document.getElementById('photo-text').style.display = 'inline';
-  document.getElementById('photo-box-label').style.border = '2px dashed var(--border)';
-  document.getElementById('photo-box-label').style.background = 'transparent';
   document.getElementById('photo-box-label').style.borderColor = '';
 
-  // Reset declaration checkbox
+  // Reset declaration
   document.getElementById('f-declare').checked = false;
   document.getElementById('declare-wrap').classList.remove('checked');
   document.getElementById('declare-tick').style.display = 'none';
@@ -2037,14 +2020,11 @@ function nextStudent() {
     }
   });
 
-  // Reset aadhar check status
+  // Reset aadhar check
   const aadharInput = document.getElementById('f-aadhar');
   aadharInput.classList.remove('valid', 'error');
   document.getElementById('aadhar-status').style.display = 'none';
   document.getElementById('err-aadhar-dup').classList.remove('show');
-
-  // Reset photo border
-  document.getElementById('photo-box-label').style.borderColor = '';
 
   // Go to step 1
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -2057,6 +2037,7 @@ function nextStudent() {
   btn.innerHTML = '✅ Form Submit Karein / फॉर्म जमा करें';
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 // ── Sticky mini bar on scroll ──
 const stickyMini = document.getElementById('sticky-mini');
