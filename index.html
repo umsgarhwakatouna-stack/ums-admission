@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>उत्क्रमित मध्य विद्यालय गढ़वा – Admission Form</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;800&family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
   :root {
     --primary: #1a3a6b;
@@ -439,9 +440,9 @@
   }
 
   .photo-box:hover { border-color: var(--primary); }
-  .photo-box input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-  .photo-box span { font-size: 10px; color: var(--muted); font-weight: 500; margin-top: 4px; }
-  #photo-img { width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; inset: 0; }
+  .photo-box input { position: absolute; inset: 0; opacity: 0; cursor: pointer; z-index: 2; }
+  .photo-box span { font-size: 10px; color: var(--muted); font-weight: 500; margin-top: 4px; z-index: 1; }
+  #photo-img { width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; inset: 0; z-index: 0; }
 
   .photo-rules { flex: 1; }
   .photo-rules p { font-size: 11px; color: var(--muted); line-height: 1.8; }
@@ -1332,8 +1333,8 @@
     </div>
 
     <button class="btn-primary" onclick="printForm()">🖨️ Print / Save as PDF</button>
-    <button class="btn-secondary" onclick="nextStudent()" style="margin-top:10px;">
-      ➕ Agla Bachha ka Admission
+    <button class="btn-secondary" onclick="downloadPDF()" style="margin-top:10px; background:var(--green); color:white; border-color:var(--green);">
+      ⬇️ Download PDF
     </button>
 
   </div><!-- /screen-success -->
@@ -1468,7 +1469,7 @@
 // ══════════════════════════════════════
 // 👇 ADMIN: Apna Google Apps Script URL
 // ══════════════════════════════════════
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbwflO0wJaZadz6_EtBjtYodcsmRWNMHrvldumBlwn575xGQv0TLSeriQkBQs5AxOC9n/exec";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbxw55x8gUpaC8pt97rclS_v1nd8CSy2zkIR6kVSRN1JAWT69sFMrgggqnS4dN5nXqo4/exec";
 // ══════════════════════════════════════
 
 let aadharCheckTimer = null;
@@ -1986,57 +1987,47 @@ function printForm() {
   window.print();
 }
 
-// ── Next Student Admission ──
-function nextStudent() {
-  uploadedDocs = {};
+// ── Download PDF ──
+function downloadPDF() {
+  const regNo = document.getElementById('s-reg-num').textContent || 'Registration';
+  const name = document.getElementById('s-name').textContent || 'Student';
+  const fileName = `${regNo}_${name}_Admission_Form.pdf`;
 
-  document.getElementById('reg-form').reset();
+  const element = document.getElementById('print-page');
 
-  // Reset photo
-  document.getElementById('photo-img').style.display = 'none';
-  document.getElementById('photo-img').src = '';
-  document.getElementById('photo-box-label').style.borderColor = '';
+  // Temporarily show print page for PDF generation
+  element.style.display = 'block';
 
-  // Reset declaration
-  document.getElementById('f-declare').checked = false;
-  document.getElementById('declare-wrap').classList.remove('checked');
-  document.getElementById('declare-tick').style.display = 'none';
+  const btn = document.querySelector('button[onclick="downloadPDF()"]');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> PDF ban raha hai...';
 
-  // Reset upload boxes
-  document.querySelectorAll('.upload-box').forEach(box => {
-    box.classList.remove('uploaded');
-    const title = box.querySelector('.up-title');
-    if (title) {
-      const icons = {
-        'box-aadhar': 'Student Aadhar Upload',
-        'box-parent-aadhar': 'Parent Aadhar Upload (Optional)',
-        'box-slc': 'SLC / TC Upload karein',
-        'box-caste': 'Caste Certificate (if applicable)',
-        'box-income': 'Income Certificate (if applicable)',
-        'box-passbook': 'Bank Passbook (First Page)',
-        'box-other': 'Any Other Document',
-      };
-      if (icons[box.id]) title.textContent = icons[box.id];
+  const opt = {
+    margin: [10, 10, 10, 10],
+    filename: fileName,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      logging: false
+    },
+    jsPDF: {
+      unit: 'mm',
+      format: 'a4',
+      orientation: 'portrait'
     }
+  };
+
+  html2pdf().set(opt).from(element).save().then(() => {
+    element.style.display = 'none';
+    btn.disabled = false;
+    btn.innerHTML = '⬇️ Download PDF';
+  }).catch(() => {
+    element.style.display = 'none';
+    btn.disabled = false;
+    btn.innerHTML = '⬇️ Download PDF';
+    alert('PDF generate nahi hua. Print option use karein.');
   });
-
-  // Reset aadhar check
-  const aadharInput = document.getElementById('f-aadhar');
-  aadharInput.classList.remove('valid', 'error');
-  document.getElementById('aadhar-status').style.display = 'none';
-  document.getElementById('err-aadhar-dup').classList.remove('show');
-
-  // Go to step 1
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen-1').classList.add('active');
-  updateSteps(1);
-
-  // Reset submit button
-  const btn = document.getElementById('submit-btn');
-  btn.disabled = false;
-  btn.innerHTML = '✅ Form Submit Karein / फॉर्म जमा करें';
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ── Sticky mini bar on scroll ──
